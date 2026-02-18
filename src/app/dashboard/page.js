@@ -55,7 +55,24 @@ export default function Dashboard() {
       {/* Conteúdo Principal */}
       <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
-          <div className="border-4 border-dashed border-gray-200 rounded-lg h-96 flex items-center justify-center">
+          {/* Grid de Atalhos */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            {/* Cartão de Clientes */}
+            <a href="/dashboard/clients" className="block p-6 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-50 transition">
+              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">👥 Clientes</h5>
+              <p className="font-normal text-gray-700">
+                Gerencie sua base de clientes. Adicione contatos e veja histórico.
+              </p>
+            </a>
+
+            {/* Cartão de Orçamentos (Em breve) */}
+            <div className="block p-6 bg-white rounded-lg border border-gray-200 shadow-md opacity-60">
+              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">📝 Orçamentos</h5>
+              <p className="font-normal text-gray-700">
+                Crie orçamentos profissionais em PDF. (Em breve)
+              </p>
+            </div>
             <div className="text-center">
               <h2 className="text-2xl font-semibold text-gray-700">Bem-vindo ao seu Painel!</h2>
               <p className="mt-2 text-gray-500">Aqui ficarão seus orçamentos e clientes.</p>
