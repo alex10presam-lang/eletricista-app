@@ -66,13 +66,13 @@ export default function Dashboard() {
               </p>
             </a>
 
-            {/* Cartão de Orçamentos (Em breve) */}
-            <div className="block p-6 bg-white rounded-lg border border-gray-200 shadow-md opacity-60">
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">📝 Orçamentos</h5>
-              <p className="font-normal text-gray-700">
-                Crie orçamentos profissionais em PDF. (Em breve)
-              </p>
-            </div>
+           {/* Cartão de Orçamentos ATUALIZADO */}
+<a href="/dashboard/budgets" className="block p-6 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-50 transition">
+  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">📝 Orçamentos</h5>
+  <p className="font-normal text-gray-700">
+    Crie, visualize e gerencie seus orçamentos.
+  </p>
+</a>
             <div className="text-center">
               <h2 className="text-2xl font-semibold text-gray-700">Bem-vindo ao seu Painel!</h2>
               <p className="mt-2 text-gray-500">Aqui ficarão seus orçamentos e clientes.</p>
