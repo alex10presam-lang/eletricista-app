@@ -140,6 +140,32 @@ test('continua funcionando sem conexão depois de abrir o aplicativo', async ({ 
   await nav(page, 'Clientes');
   await expect(page.getByRole('heading', { name: 'Contato sem conexão' })).toBeVisible();
 });
+test('alternâncias preservam os registros visíveis de cada espaço', async ({ page }) => {
+  await personal(page);
+  await client(page, 'Contato pessoal separado');
+  for (let attempt = 0; attempt < 3; attempt++) {
+    await nav(page, 'Mais');
+    await page.getByRole('button', { name: 'Explorar demonstração' }).click();
+    await expect(page.getByText('Dados fictícios · explore à vontade')).toBeVisible();
+    await nav(page, 'Orçamentos');
+    await expect(page.getByRole('button', { name: /ORC-0001/ })).toBeVisible();
+    await nav(page, 'Clientes');
+    await expect(
+      page.getByRole('heading', { name: 'Marina Costa · exemplo', exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: 'Contato pessoal separado', exact: true }),
+    ).toHaveCount(0);
+    await page.getByRole('button', { name: 'Usar meus dados' }).click();
+    await nav(page, 'Clientes');
+    await expect(
+      page.getByRole('heading', { name: 'Contato pessoal separado', exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: 'Marina Costa · exemplo', exact: true }),
+    ).toHaveCount(0);
+  }
+});
 test('backup exportado restaura registros e arquivo corrompido não altera o espaço', async ({
   page,
 }) => {
@@ -156,13 +182,11 @@ test('backup exportado restaura registros e arquivo corrompido não altera o esp
   await page.getByRole('button', { name: 'Excluir', exact: true }).click();
   await page.getByRole('button', { name: 'Excluir cliente', exact: true }).click();
   await nav(page, 'Mais');
-  await page
-    .getByLabel('Arquivo de backup')
-    .setInputFiles({
-      name: 'backup.json',
-      mimeType: 'application/json',
-      buffer: Buffer.from(backup),
-    });
+  await page.getByLabel('Arquivo de backup').setInputFiles({
+    name: 'backup.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(backup),
+  });
   await page.getByRole('button', { name: 'Substituir e restaurar' }).click();
   await nav(page, 'Clientes');
   await expect(page.getByRole('heading', { name: 'Cliente de teste', exact: true })).toBeVisible();

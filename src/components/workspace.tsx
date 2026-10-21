@@ -89,12 +89,15 @@ export default function Workspace() {
   const busyRef = useRef(false);
   const [notice, setNotice] = useState('');
   const main = useRef<HTMLElement>(null);
+  const activeMode = useRef<Mode | null>(null);
+  const pendingWrites = useRef(0);
 
   function load() {
     return readInitialWorkspace()
       .then(({ saved, chosen }) => {
         setLoadError('');
         if (saved) {
+          activeMode.current = chosen;
           setMode(chosen);
           setState(saved);
         }
@@ -113,15 +116,18 @@ export default function Workspace() {
     if (!mode) return;
     let active = true;
     const refresh = () => {
+      if (activeMode.current !== mode) return;
       readWorkspace(mode)
         .then((next) => {
-          if (active && next)
+          if (active && next && activeMode.current === mode)
             setState((previous) =>
-              !previous || next.revision >= previous.revision ? next : previous,
+              activeMode.current === mode && (!previous || next.revision >= previous.revision)
+                ? next
+                : previous,
             );
         })
         .catch((error) => {
-          if (active) setNotice(errorMessage(error));
+          if (active && activeMode.current === mode) setNotice(errorMessage(error));
         });
     };
     const cleanup = subscribeWorkspace(refresh);
@@ -166,6 +172,13 @@ export default function Workspace() {
   }
   async function switchMode(next: Mode) {
     if (busyRef.current) return;
+    if (pendingWrites.current) {
+      setNotice('Aguarde a gravação terminar antes de trocar de espaço.');
+      return;
+    }
+    const previousMode = activeMode.current;
+    // Invalida leituras pendentes antes de inicializar/notificar o outro espaço.
+    activeMode.current = next;
     busyRef.current = true;
     setBusy(true);
     try {
@@ -183,6 +196,7 @@ export default function Workspace() {
       }
       if (navigator.storage?.persist) await navigator.storage.persist().catch(() => false);
     } catch (error) {
+      activeMode.current = previousMode;
       setNotice(errorMessage(error));
     } finally {
       busyRef.current = false;
@@ -191,8 +205,14 @@ export default function Workspace() {
   }
   async function save(command: Command) {
     if (!mode) throw new Error('Abra seu espaço de trabalho.');
-    const next = await dispatch(mode, command);
-    setState(next);
+    const operationMode = mode;
+    pendingWrites.current += 1;
+    try {
+      const next = await dispatch(operationMode, command);
+      if (activeMode.current === operationMode) setState(next);
+    } finally {
+      pendingWrites.current -= 1;
+    }
   }
   async function act(command: Command, message: string) {
     if (busyRef.current) return;
