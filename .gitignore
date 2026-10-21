@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+artifacts/
+test-results/
+playwright-report/
+*.jks
+*.keystore
+signing/
+.gradle/
