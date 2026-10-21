@@ -66,7 +66,10 @@ async function connect() {
       awaitPromise: true,
       returnByValue: true,
     });
-    if (result.exceptionDetails) throw new Error(result.exceptionDetails.exception?.description || result.exceptionDetails.text);
+    if (result.exceptionDetails)
+      throw new Error(
+        result.exceptionDetails.exception?.description || result.exceptionDetails.text,
+      );
     return result.result.value;
   };
   await until(
@@ -144,11 +147,16 @@ await until(
 );
 writeFileSync('artifacts/android-inicio.png', run('exec-out', 'screencap', '-p'));
 await click(cdp, 'Orçamentos', '.bottom-nav button');
-await until(() => cdp.evaluate(() => {
-  const card = document.querySelector('.quote-card');
-  if (!card) return false;
-  card.click(); return true;
-}), 'lista de propostas');
+await until(
+  () =>
+    cdp.evaluate(() => {
+      const card = document.querySelector('.quote-card');
+      if (!card) return false;
+      card.click();
+      return true;
+    }),
+  'lista de propostas',
+);
 await click(cdp, 'Gerar e compartilhar PDF');
 await until(
   () => run('shell', 'run-as', appId, 'ls', 'cache/exports').toString().includes('.pdf'),
@@ -160,7 +168,7 @@ writeFileSync('artifacts/orcamento-android.pdf', pdf);
 await until(
   () =>
     /mCurrentFocus=.*(?:ChooserActivity|ResolverActivity)/.test(
-      run('shell', 'dumpsys', 'window', 'windows').toString(),
+      run('shell', 'dumpsys', 'window').toString(),
     ),
   'folha nativa de compartilhamento',
 );
