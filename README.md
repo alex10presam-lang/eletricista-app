@@ -2,6 +2,9 @@
 
 **O escritório de campo de quem trabalha com elétrica.**
 
+[![Validação Android](https://github.com/alex10presam-lang/eletricista-app/actions/workflows/validacao.yml/badge.svg?branch=main)](https://github.com/alex10presam-lang/eletricista-app/actions/workflows/validacao.yml)
+[![Android 7.0+](https://img.shields.io/badge/Android-7.0%2B-174B3A)](https://github.com/alex10presam-lang/eletricista-app/releases/tag/v1.0.0)
+
 Aplicativo Android para organizar clientes, preparar orçamentos e acompanhar
 trabalhos sem depender de conexão. Projeto pessoal desenvolvido por
 [Alexandre](https://github.com/alex10presam-lang), com uma demonstração separada
@@ -28,13 +31,21 @@ não oferece aceite eletrônico e a agenda não dispara alarmes.
 
 ## Experimentar no Android
 
-O projeto gera um **APK de testes**, compatível com Android 7.0 ou superior e
-Android System WebView atualizado. Após uma execução aprovada da rotina Android
-no GitHub Actions, baixe o artefato `EletroPro-android-debug` na aba **Actions**.
+**[Baixar EletroPro 1.0.0 para Android](https://github.com/alex10presam-lang/eletricista-app/releases/download/v1.0.0/EletroPro-1.0.0-debug.apk)**
+
+O **APK de testes** é compatível com Android 7.0 ou superior e Android System
+WebView atualizado. A [página da versão](https://github.com/alex10presam-lang/eletricista-app/releases/tag/v1.0.0)
+inclui as notas da entrega e a soma SHA-256 para conferir o download.
 Ao compilar localmente, o arquivo fica em `artifacts/EletroPro-1.0.0-debug.apk`.
+As execuções aprovadas do GitHub Actions também disponibilizam o artefato
+`EletroPro-android-debug` para cada compilação.
 
 Na primeira abertura, escolha **Explorar demonstração** ou **Começar meu espaço**.
 Os exemplos usam dados e preços fictícios. Nenhuma conta ou chave do Supabase é necessária.
+
+Para conhecer o fluxo, abra um orçamento da demonstração, gere o PDF e acompanhe
+o trabalho vinculado na agenda. Depois, escolha **Usar meus dados** para começar
+um espaço vazio. Os dois espaços têm armazenamento separado.
 
 Esse APK usa assinatura de depuração. A publicação em loja exige uma chave de
 lançamento sob responsabilidade do proprietário. APKs de depuração gerados em
@@ -86,6 +97,16 @@ integração incompleta com Supabase foi substituída por um espaço local funci
 
 Leia [arquitetura e limites](docs/arquitetura.md) e o
 [roteiro de validação no Android](docs/validacao-android.md).
+
+## Qualidade verificada
+
+- 35 testes automatizados de regras, armazenamento, backups e documentos PDF.
+- 11 cenários de interface em tamanho de celular, incluindo o isolamento da demonstração.
+- Verificação de tipos, lint, compilação estática e compilação/lint Android na integração contínua.
+- APK conferido em emulador Android 16: abertura, PDF, compartilhamento nativo e persistência após reabertura sem rede.
+
+Os testes cobrem os fluxos descritos; a conferência em aparelhos físicos e nos
+aplicativos de destino continua sendo parte da validação antes de uso profissional.
 
 ## Dados e privacidade
 
