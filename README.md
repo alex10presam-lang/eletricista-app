@@ -11,9 +11,21 @@ trabalhos sem depender de conexão. Projeto pessoal desenvolvido por
 dos dados pessoais para explorar os fluxos com segurança.
 
 <p align="center">
-  <img src="docs/images/inicio-mobile.png" width="280" alt="Tela inicial do EletroPro com resumo e acesso rápido ao orçamento" />
-  <img src="docs/images/orcamentos-mobile.png" width="280" alt="Lista de orçamentos com status e valores" />
+  <img src="docs/images/boas-vindas-mobile.png" width="230" alt="Tela de boas-vindas com opção de explorar a demonstração ou começar o próprio espaço" />
+  <img src="docs/images/inicio-mobile.png" width="230" alt="Tela inicial do EletroPro com resumo e acesso rápido ao orçamento" />
+  <img src="docs/images/orcamentos-mobile.png" width="230" alt="Lista de orçamentos com status e valores" />
 </p>
+
+<details>
+<summary><b>Mais telas</b> — orçamento, clientes, agenda e backup</summary>
+<br>
+<p align="center">
+  <img src="docs/images/orcamento-detalhe-mobile.png" width="230" alt="Detalhe de um orçamento com itens, totais e geração de PDF" />
+  <img src="docs/images/clientes-mobile.png" width="230" alt="Lista de clientes com busca e ações" />
+  <img src="docs/images/agenda-mobile.png" width="230" alt="Agenda de campo com trabalhos do dia" />
+  <img src="docs/images/backup-mobile.png" width="230" alt="Tela Mais com dados profissionais, catálogo e backup" />
+</p>
+</details>
 
 ## O que é possível fazer
 
